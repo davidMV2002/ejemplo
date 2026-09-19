@@ -56,7 +56,7 @@ class _Onboardingview extends State<Onboardingview>{
                 return;
               }
               final perfil = doc.data()!;
-              //print("LA ALTURA DEL USUARIO ES: ${perfil.altura}");
+              print("LA ALTURA DEL USUARIO ES: ${perfil.altura}");
 
               Navigator.popAndPushNamed(context, "/HomeView");
             },
