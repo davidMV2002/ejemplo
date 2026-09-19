@@ -7,6 +7,7 @@ class Createprofileview extends StatelessWidget{
   final TextEditingController altura = TextEditingController();
   final TextEditingController edad = TextEditingController();
   final TextEditingController nombre = TextEditingController();
+
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   void funClickCancel(){
@@ -15,15 +16,17 @@ class Createprofileview extends StatelessWidget{
   }
 
   void funClickAcept() async{
-    String uid = FirebaseAuth.instance.currentUser!.uid;
+    if(edad.text.isNotEmpty && altura.text.isNotEmpty && nombre.text.isNotEmpty) {
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      //final perfil =
+      await db.collection("Perfiles").doc(uid).set({
+        "Altura": altura.text,
+        "Edad": edad.text,
+        "Nombre": nombre.text,
+      });
 
-    await db.collection("Perfiles").doc(uid).set({
-      "Altura": altura.text,
-      "Edad": edad.text,
-      "Nombre": nombre.text,
-    });
-
-    Navigator.popAndPushNamed(miContext, "/HomeView");
+      Navigator.popAndPushNamed(miContext, "/HomeView");
+    }
   }
 
   @override

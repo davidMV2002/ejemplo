@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'Perfil.dart';
+
 class Onboardingview extends StatefulWidget{
   const Onboardingview({super.key});
 
@@ -42,7 +44,11 @@ class _Onboardingview extends State<Onboardingview>{
     else{
       String uid=FirebaseAuth.instance.currentUser!.uid;
       print("EL UID DEL USUARIO LOGUEADO ES" + uid);
-      final docRef = db.collection("Perfiles").doc(uid);
+      final docRef = db.collection("Perfiles").doc(uid)
+        .withConverter(
+          fromFirestore: Perfil.fromFirestore,
+          toFirestore: (Perfil perfil, ) => perfil.toFirestore());
+      ;
       docRef.get().then(
             (DocumentSnapshot doc) {
               if(doc.data()==null){
@@ -50,7 +56,7 @@ class _Onboardingview extends State<Onboardingview>{
                 return;
               }
               final data = doc.data() as Map<String, dynamic>;
-              print("LA ALTURA DEL USUARIO ES: "+data["Altura"].toString());
+              //print("LA ALTURA DEL USUARIO ES: "+data["Altura"].toString());
 
               Navigator.popAndPushNamed(context, "/HomeView");
             },
