@@ -19,5 +19,12 @@ class Perfil {
     );
   }
 
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (nombre != null) "name": nombre,
+      if (edad != null) "edad": edad,
+      if (altura != null) "altura": altura,
+    };
+  }
 
 }

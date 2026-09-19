@@ -47,16 +47,16 @@ class _Onboardingview extends State<Onboardingview>{
       final docRef = db.collection("Perfiles").doc(uid)
         .withConverter(
           fromFirestore: Perfil.fromFirestore,
-          toFirestore: (Perfil perfil, ) => perfil.toFirestore());
+          toFirestore: (Perfil perfil, _) => perfil.toFirestore())
       ;
       docRef.get().then(
-            (DocumentSnapshot doc) {
+            (DocumentSnapshot<Perfil> doc) {
               if(doc.data()==null){
                 Navigator.popAndPushNamed(context, "/CreateProfileView");
                 return;
               }
-              final data = doc.data() as Map<String, dynamic>;
-              //print("LA ALTURA DEL USUARIO ES: "+data["Altura"].toString());
+              final perfil = doc.data()!;
+              //print("LA ALTURA DEL USUARIO ES: ${perfil.altura}");
 
               Navigator.popAndPushNamed(context, "/HomeView");
             },
