@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 class HomeView extends StatelessWidget{
   late BuildContext miContext;
 
+  void actualizarNombre(){
+
+  }
+
   void funClickLogout(){
     FirebaseAuth.instance.signOut();
     Navigator.popAndPushNamed(miContext, "/LoginView");

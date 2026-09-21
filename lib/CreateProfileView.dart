@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ejemplo/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'Perfil.dart';
 
 class Createprofileview extends StatelessWidget{
   late BuildContext miContext;
@@ -15,16 +17,17 @@ class Createprofileview extends StatelessWidget{
     Navigator.popAndPushNamed(miContext, "/LoginView");
   }
 
-  void funClickAcept() async{
-    if(edad.text.isNotEmpty && altura.text.isNotEmpty && nombre.text.isNotEmpty) {
-      String uid = FirebaseAuth.instance.currentUser!.uid;
-      //final perfil =
-      await db.collection("Perfiles").doc(uid).set({
-        "Altura": altura.text,
-        "Edad": edad.text,
-        "Nombre": nombre.text,
-      });
-
+  void funConfirmar(){
+    if(edad.text.isNotEmpty &&
+        altura.text.isNotEmpty) {
+      final perfiles = db.collection("Perfiles");
+      final perfil = new Perfil(
+          uid:FirebaseAuth.instance.currentUser!.uid,
+          nombre: nombre.text,
+          edad: int.parse(edad.text),
+          altura: double.parse(altura.text)
+      );
+      perfiles.doc(FirebaseAuth.instance.currentUser!.uid).set(perfil.toFirestore());
       Navigator.popAndPushNamed(miContext, "/HomeView");
     }
   }
@@ -48,7 +51,7 @@ class Createprofileview extends StatelessWidget{
           Row(
             children: [
               TextButton(onPressed: funClickCancel, child: Text('Cancelar')),
-              TextButton(onPressed: funClickAcept, child: Text('Aceptar')),
+              TextButton(onPressed: funConfirmar, child: Text('Confirmar')),
             ],
           )
         ],

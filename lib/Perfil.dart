@@ -4,18 +4,21 @@ class Perfil {
   final String? nombre;
   final int? edad;
   final double? altura;
+  String? uid;
 
-  Perfil({this.nombre, this.edad,this.altura});
+
+  Perfil({this.uid,this.nombre, this.edad, this.altura});
 
   factory Perfil.fromFirestore(
-    DocumentSnapshot<Map<String,dynamic>> snapshot,
-    SnapshotOptions? options,
-  ){
+      DocumentSnapshot<Map<String, dynamic>> snapshot,
+      SnapshotOptions? options,
+      ) {
     final data = snapshot.data();
     return Perfil(
-      nombre: data?['nombre'],
-      edad: data?['edad'],
-      altura: data?['altura'],
+      uid:snapshot.id,
+      nombre: data?['name'] as String?,
+      edad: (data?['edad'] as num?)?.toInt(),
+      altura: (data?['altura'] as num?)?.toDouble(),
     );
   }
 
