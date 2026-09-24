@@ -1,34 +1,55 @@
-import 'package:ejemplo/CreateProfileView.dart';
-import 'package:ejemplo/HomeView.dart';
-import 'package:ejemplo/LoginView.dart';
-import 'package:ejemplo/OnBoardingView.dart';
-import 'package:ejemplo/RegistroView.dart';
+import 'package:ejemplo/views/HomeView.dart';
+import 'package:ejemplo/views/LoginView.dart';
+import 'package:ejemplo/views/MessagesView.dart';
+import 'package:ejemplo/views/RegisterView.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Miapp extends StatelessWidget{
+import 'views/OnBoardingView.dart';
+import 'views/ProfileView.dart';
 
-
+class Miapp extends StatelessWidget {
+  double dbNumber=0.0;
 
   @override
   Widget build(BuildContext context) {
-    String rutaInicial="/OnBoardingView";
+
+    String rutaInicial="/LoginView";
     if(FirebaseAuth.instance.currentUser!=null){
-      rutaInicial="/OnBoardingView";
+      rutaInicial="/HomeView";
     }
 
-
-    return MaterialApp(
+    return new MaterialApp(
       title: "MI APP 1",
       routes: {
-        "/LoginView" : (context) => LoginView(),
-        "/HomeView" : (context) => HomeView(),
-        "/RegistroView" : (context) => RegistroView(),
-        "/OnBoardingView" : (context) => Onboardingview(),
-        "/CreateProfileView" : (context) => Createprofileview(),
+        "/LoginView" : (context) =>  Loginview(),
+        "/HomeView" : (context) =>  Homeview(),
+        "/RegisterView" : (context) =>  Registerview(),
+        "/Onboardingview":(context) => Onboardingview(),
+        "/Profileview":(context) => Profileview(),
+        "/Messagesview":(context) => Messagesview(),
+
       },
-      initialRoute: rutaInicial,
+      initialRoute: "/Onboardingview",
     );
   }
+
+/*
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home:  Scaffold(
+        body: CarouselView(
+          scrollDirection: Axis.vertical,
+          itemExtent: double.infinity,
+          children: List<Widget>.generate(10, (int index) {
+            return Center(child: Text('Item $index'));
+          }),
+        ),
+      ),
+    );
+
+  }
+*/
+
 }
